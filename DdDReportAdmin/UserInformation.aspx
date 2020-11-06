@@ -84,7 +84,7 @@
 			</td>
 			<td rowspan="5">
 				<dx:ASPxListBox ID="lst_clients" runat="server" 
-					EnableDefaultAppearance="False" Rows="10">
+					Rows="10">
 					<Border BorderStyle="None" />
 				</dx:ASPxListBox>
 			</td>
