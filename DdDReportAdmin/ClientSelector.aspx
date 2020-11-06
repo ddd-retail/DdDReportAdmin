@@ -39,9 +39,9 @@
 					</dx:ASPxButton>
 							</td>
 							<td>
-								<dxe:ASPxButton ID="btn_save" runat="server" AutoPostBack="False" 
+								<dx:ASPxButton ID="btn_save" runat="server" AutoPostBack="False" 
 									onclick="btn_save_Click" Text="Save changes">
-								</dxe:ASPxButton>
+								</dx:ASPxButton>
 							</td>
 						</tr>
 					</table>

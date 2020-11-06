@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserInformation.aspx.cs" Inherits="DdDReportAdmin.UserInformation" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterPage.master" CodeBehind="UserInformation.aspx.cs" Inherits="DdDReportAdmin.UserInformation" %>
 <%@ Register assembly="DevExpress.Web.v19.2, Version=19.2.9.0, Culture=neutral" namespace="DevExpress.Web" tagprefix="dx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="main" Runat="Server">

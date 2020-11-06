@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="DdDReportAdmin.Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterPage.master" CodeBehind="Default.aspx.cs" Inherits="DdDReportAdmin.Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="main" Runat="Server">
 </asp:Content>
