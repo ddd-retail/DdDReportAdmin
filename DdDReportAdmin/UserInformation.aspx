@@ -83,10 +83,10 @@
 				</dx:ASPxLabel>
 			</td>
 			<td rowspan="5">
-				<dx:ListBox ID="lst_clients" runat="server" 
+				<dx:ASPxListBox ID="lst_clients" runat="server" 
 					EnableDefaultAppearance="False" Rows="10">
 					<Border BorderStyle="None" />
-				</dx:ListBox>
+				</dx:ASPxListBox>
 			</td>
 		</tr>
 		<tr>

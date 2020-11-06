@@ -23,7 +23,6 @@ namespace DdDReportAdmin
         }
         protected void ASPxCallbackPanel1_Callback(object source, DevExpress.Web.CallbackEventArgsBase e)
         {
-            this.lst_clients.EnableDefaultAppearance = true;
             DdDReportUser user = DdDReportUser.GetUser(ASPxComboBox2.SelectedItem.Text);
 
             this.lbl_cubename.Text = user.Cubename;
