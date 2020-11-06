@@ -1,0 +1,422 @@
+html, form {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 20px;
+    background: #ddd url(../Images/background-gradient.gif) repeat-y center;
+}
+
+body, textarea, input, a, select {
+    font-family: Tahoma, Verdana, Geneva, sans-serif;
+    font-size: 13px;
+    color: #52607E;
+}
+
+p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.content h2  {
+	border-bottom: solid 1px #ccc;
+	padding-bottom: 5px;
+	font-weight: normal;
+	margin: 0 0 1.5em 0;
+}
+
+.minorHeader  {
+	padding-top: 15px;
+	padding-bottom: 20px;
+        margin: 0;
+        font-size: 16px;
+        font-weight: bold;
+}
+
+h3 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+a img {
+    border: 0;
+}
+
+.checkbox {
+    margin: 0;
+}
+
+.draggable .handle {
+    cursor: hand;
+    cursor: pointer;
+}
+
+/* the page */
+
+#top .content {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#top .leftIcons {
+    float: left;
+}
+
+#top .rightIcons {
+    float: right;
+}
+
+#top h1 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: normal;
+    color: #3f3f3f;
+    margin-top: 11px;
+    margin-bottom: 0;
+}
+
+#leftColumn {
+    padding-right: 20px;
+    padding-top: 0px;
+    vertical-align: top;
+    width: 170px;
+}
+
+#leftColumn .box {
+    width: 170px;
+}
+
+#main {
+    width: 100%;
+    padding-top: 20px;
+    vertical-align: top;
+}
+
+#mainLayout {
+    width: 100%;
+}
+
+/* rounded boxes */
+
+.box {
+    position: relative;
+    background-color: #fff;
+}
+
+.box .header .close {
+    position: absolute;
+    right: 6px;
+    top: 4px;
+}
+
+.box .header .minimize {
+    position: absolute;
+    right: 32px;
+    top: 2.5px;
+}
+
+.box .header {
+    color: #fff;
+    font-weight: bold;
+    background: #52607E url(../Images/header-sep.gif) repeat-x bottom;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 6px;
+    padding-top: 5px;
+}
+
+.box .dataHeader {
+    color: #fff;
+    font-weight: bold;
+    background: #52607E url(../Images/main-heading-back.png) repeat-x top;
+    padding: 5px 10px 6px 10px;
+    margin-bottom: 5px;
+}
+
+.box .subheader {
+    padding: 10px;
+    background-color: #e1e4eb;
+}
+
+.box .content 
+{
+    padding: 0 10px 5px 10px;
+}
+
+.box .configurationLinks span {
+	display: block;
+	padding: 2px 0;
+}
+
+.box .topleft {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.box .bottomleft {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.box .topright {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.box .bottomright {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.box .left {
+    width: 2px;
+    background: url(../Images/box-l.gif) repeat-y;
+}
+
+.box .left div {
+    width: 2px;
+}
+
+.box .right {
+    width: 3px;
+    background: url(../Images/box-r.gif) repeat-y;
+}
+
+.box .right div {
+    width: 3px;
+}
+
+.box .top {
+    height: 2px;
+    background: url(../Images/box-t.gif) repeat-x;
+}
+
+.box .bottom {
+    height: 4px;
+    background: url(../Images/box-b.gif) repeat-x;
+}
+
+table.data tr td {
+     padding-right: 10px;
+}
+
+tr.odd td {
+     background-color: #e1e4eb;
+}
+
+
+/* Navigation */
+.nav-one, .nav-one ul { 
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-one li {
+    float: left;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.nav-one li a, .nav-one li a:link, .nav-one li a:active, .nav-one li a:visited {
+    background: #52607E;
+    color: #fff;
+    display: block;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-right: 5px;
+    text-decoration: none;
+}
+
+.nav-one ul {
+    background: #52607E;
+    color: #fff;
+    border: 1px solid #000;
+    border-top: 0px;
+    list-style: none;
+    padding: 3px;
+    width: 150px;
+    position:absolute; 
+}
+
+.nav-one li:hover ul,
+.nav-one li.sfHover ul {
+    top: 18px;
+}
+
+.nav-one ul li {
+    border: 0;
+    float: none;
+}
+
+.overview-add-time {
+    margin-left: 10px;
+}
+
+.overview-add-client {
+    margin-left: 10px;
+}
+
+#overview-time {
+    margin-right: 10px;
+}
+
+
+.middleContent {
+    position: absolute;
+    left: 50%;
+    width: 1024px;
+    margin-left: -500px;
+    /* margin-top: 70px; */
+}
+
+.adminLinks {
+    text-align: center;
+    border-top: solid 1px #ccc;
+    padding-top: 15px;
+}
+.adminLinks a {
+    color: #666;
+}
+
+.center {
+    text-align: center;
+}
+
+#machines {
+    margin-left: 25px;
+}
+
+.logical-row {
+    padding-bottom: 20px;
+}
+
+.helptext {
+    font-family: Tahoma, Verdana, Geneva, sans-serif;
+    font-size: 11px;
+    font-style: italic;
+    color: #52607E;
+}
+
+.good,
+.fail 
+{
+	margin-bottom: 1em;
+}
+.fail {
+    color: #DF0101;
+}
+
+.good {
+    color: #04B404;
+}
+
+td .leftside {
+    text-align: right;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+td .rightside {
+    text-align: left;
+    padding-right: 15px;
+}
+
+td .seperator {
+    border-bottom: 2px solid #000000; 
+}
+
+.clear {
+    clear: both;
+}
+
+.input-error {
+    border: 1px solid #ff0000;
+}
+
+select {
+    border: 1px solid #000000;
+}
+
+textarea {
+    border: 1px solid #000000;
+    padding: 2px;
+}
+
+input[type="text"], input[type="password"] {
+    border: 1px solid #000000;
+    margin: 1px;
+}
+
+#multipleMachinesDialog #machineContent {
+    max-height: 600px;
+    overflow: auto;
+}
+
+input.isBold {
+    width: 321px;
+    font-weight: bold;
+}
+
+select#client,
+select#machine {
+	width: 150px;
+}
+
+/* generic buttons */
+a.button {
+    background: transparent url(../Images/bg_button_a.gif) no-repeat scroll top right;
+    color: #444;
+    display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+    height: 24px;
+    margin-right: 6px;
+    padding-right: 18px; /* sliding doors padding */
+    text-decoration: none;
+}
+
+a.button span {
+    background: transparent url(../Images/bg_button_span.gif) no-repeat;
+    display: block;
+    line-height: 14px;
+    padding: 5px 0 5px 18px;
+}
+/* two-button centerer */
+.centredBtns {
+	width: 100%;
+	float: left;
+}
+.centredBtns div {
+	width: 50%;
+	float: left;
+}
+.centredBtns .btnLeft a {
+	float: right;
+        margin-right: 20px;
+}
+
+.button-center {
+    float:right;
+    position:relative;
+    left:-50%;
+}
+
+.button-element-center {
+    position:relative;
+    left:50%;
+}
+
+/* store chooser */
+a#single.button {
+    margin-left: 260px;
+}

@@ -1,0 +1,42 @@
+.box .loginContent {
+    padding-top: 10px;
+    padding-bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.centerbox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 270px;
+    margin-left: -135px;
+    margin-top: -70px;
+}
+
+#LoginControl_LoginButton
+{
+	margin-bottom: 10px;
+}
+
+.button
+{
+    vertical-align:middle;
+    padding-left:5px;
+    padding-top:6px;
+    padding-right:8px;
+}
+
+.hoverbutton
+{
+    vertical-align:middle;
+    padding-left:5px;
+    padding-top:6px;
+    padding-right:8px;
+    cursor:pointer;
+}
+
+#LoginControl_RememberMe
+{
+    margin: 7px;
+}

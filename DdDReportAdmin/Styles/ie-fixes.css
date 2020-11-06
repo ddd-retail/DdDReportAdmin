@@ -1,0 +1,16 @@
+.box .bottomleft {
+    bottom: expression(-this.parentNode.offsetHeight%2+"px"); 
+}
+
+.box .topright {
+    right: expression(-this.parentNode.offsetWidth%2+"px"); 
+}
+
+.box .bottomright {
+    bottom: expression(-this.parentNode.offsetHeight%2+"px"); 
+    right: expression(-this.parentNode.offsetWidth%2+"px"); 
+}
+
+#main .subheader .dimensionTable h3 {
+    width: 250px;
+}
