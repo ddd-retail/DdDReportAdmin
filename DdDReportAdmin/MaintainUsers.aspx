@@ -346,7 +346,7 @@ cpanel.PerformCallback(&quot;new&quot;);
 			<td class="style11">
 				User active:</td>
 			<td>
-				<dx:ASPxImage ID="img_status" runat="server" Height="32px" IsPng="True" 
+				<dx:ASPxImage ID="img_status" runat="server" Height="32px" 
 					Width="32px">
 				</dx:ASPxImage>
 			</td>
