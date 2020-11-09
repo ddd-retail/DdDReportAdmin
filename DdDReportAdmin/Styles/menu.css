@@ -3,8 +3,8 @@
 	height: 22px;
 }
 
-.menu .dxGroupHeader_custom,
-.menu .dxGroupHeaderCollapsed_custom {
+.menu .dxnb-header_custom,
+.menu .dxnb-headerCollapsed_custom {
     color: #fff;
     font-weight: bold;
     background: #5e7394;
@@ -14,13 +14,13 @@
     padding-top: 5px;
 }
 
-.menu .dxGroupHeader_custom {
+.menu .dxnb-header_custom {
     background-image: url(../Images/header-sep.gif);
     background-repeat: repeat-x;
     background-position: bottom;
 }
 
-.menu .dxGroupHeaderCollapsed_custom {
+.menu .dxnb-headerCollapsed_custom {
     background-image: url(../Images/menu-middle.gif);
     background-repeat: repeat-x;
     background-position: bottom;
@@ -30,21 +30,21 @@
     background-image: none;
 }
 
-.menu .dxGroupContent_custom {
+.menu .dxnb-link_custom {
     background: #fff;
     padding-bottom: 10px;
 }
 
-.menu .dxItem_custom {
+.menu .dxnb-item_custom {
     padding-left: 15px;
 }
 
-.menu .dxItem_custom a {
+.menu .dxnb-item_custom a {
     color: #8b95ae;
     text-decoration: none;
 }
 
-.menu .dxItemSelected_custom {
+.menu .dxnb-itemSelected_custom {
     color: #5e7394;
     font-weight: bold;
 }
