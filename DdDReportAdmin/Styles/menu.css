@@ -3,8 +3,8 @@
 	height: 22px;
 }
 
-.menu .dxnbGroupHeader_custom,
-.menu .dxnbGroupHeaderCollapsed_custom {
+.menu .dxGroupHeader_custom,
+.menu .dxGroupHeaderCollapsed_custom {
     color: #fff;
     font-weight: bold;
     background: #5e7394;
@@ -14,13 +14,13 @@
     padding-top: 5px;
 }
 
-.menu .dxnbGroupHeader_custom {
+.menu .dxGroupHeader_custom {
     background-image: url(../Images/header-sep.gif);
     background-repeat: repeat-x;
     background-position: bottom;
 }
 
-.menu .dxnbGroupHeaderCollapsed_custom {
+.menu .dxGroupHeaderCollapsed_custom {
     background-image: url(../Images/menu-middle.gif);
     background-repeat: repeat-x;
     background-position: bottom;
@@ -30,21 +30,21 @@
     background-image: none;
 }
 
-.menu .dxnbGroupContent_custom {
+.menu .dxGroupContent_custom {
     background: #fff;
     padding-bottom: 10px;
 }
 
-.menu .dxnbItem_custom {
+.menu .dxItem_custom {
     padding-left: 15px;
 }
 
-.menu .dxnbItem_custom a {
+.menu .dxItem_custom a {
     color: #8b95ae;
     text-decoration: none;
 }
 
-.menu .dxnbItemSelected_custom {
+.menu .dxItemSelected_custom {
     color: #5e7394;
     font-weight: bold;
 }
