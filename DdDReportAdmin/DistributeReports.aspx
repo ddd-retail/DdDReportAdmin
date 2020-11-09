@@ -99,9 +99,9 @@
 <SettingsSelection Enabled="True"></SettingsSelection>
 
 					<Columns>
-						<dxwtl:TreeListTextColumn Caption="Receipents" FieldName="Receipent" 
+						<dx:TreeListTextColumn Caption="Receipents" FieldName="Receipent" 
 							ShowInCustomizationForm="True" VisibleIndex="0">
-						</dxwtl:TreeListTextColumn>
+						</dx:TreeListTextColumn>
 					</Columns>
 					<Settings ShowColumnHeaders="False" ShowTreeLines="False" />
 					<SettingsSelection Enabled="True" />
