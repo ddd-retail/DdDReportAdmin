@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using NLog;
 
 namespace DdDReportAdmin
 {
@@ -30,6 +31,8 @@ namespace DdDReportAdmin
         private List<Client> clientObjects;
         private bool clientsConnected;
         private string concern;
+
+        private static readonly Logger _logger = new LogFactory().GetCurrentClassLogger();
 
         public DdDReportUser()
         {
@@ -665,10 +668,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
-                using (System.IO.TextWriter l = new System.IO.StreamWriter(@"C:\inetpub\wwwroot\ReportAdminError.txt", true))
-                {
-                    l.WriteLine(DateTime.Now + ": " + ex.Message + "\n" + ex.StackTrace);
-                }
+                _logger.Error(ex);
                 return new List<DdDReportUser>();
             }
         }

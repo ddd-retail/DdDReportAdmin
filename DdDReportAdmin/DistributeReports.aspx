@@ -70,11 +70,11 @@
 
 <SettingsSelection Enabled="True"></SettingsSelection>
 					<Columns>
-						<dxwtl:TreeListTextColumn Caption="Clients" FieldName="Client" 
+						<dx:TreeListTextColumn Caption="Clients" FieldName="Client" 
 							ShowInCustomizationForm="True" VisibleIndex="0">
 							<PropertiesTextEdit EncodeHtml="False">
 							</PropertiesTextEdit>
-						</dxwtl:TreeListTextColumn>
+						</dx:TreeListTextColumn>
 					</Columns>
 					<Settings ShowColumnHeaders="False" ShowTreeLines="False" />
 					<SettingsSelection Enabled="True" />
