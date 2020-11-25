@@ -10,25 +10,16 @@
 namespace DdDReportAdmin {
     
     
-    public partial class MaintainUsers {
+    public partial class MaintainUsersOld {
         
         /// <summary>
-        /// rpMaintainUsers control.
+        /// cb_searchCube control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxRoundPanel rpMaintainUsers;
-        
-        /// <summary>
-        /// cbSearchCube control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxComboBox cbSearchCube;
+        protected global::DevExpress.Web.ASPxComboBox cb_searchCube;
         
         /// <summary>
         /// HiddenField1 control.
@@ -49,121 +40,121 @@ namespace DdDReportAdmin {
         protected global::System.Web.UI.WebControls.HiddenField HiddenField2;
         
         /// <summary>
-        /// cpControlPanel control.
+        /// ASPxCallbackPanel2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxCallbackPanel cpControlPanel;
+        protected global::DevExpress.Web.ASPxCallbackPanel ASPxCallbackPanel2;
         
         /// <summary>
-        /// cbSearch control.
+        /// cb_search control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxComboBox cbSearch;
+        protected global::DevExpress.Web.ASPxComboBox cb_search;
         
         /// <summary>
-        /// btnNew control.
+        /// btn_new control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxButton btnNew;
+        protected global::DevExpress.Web.ASPxButton btn_new;
         
         /// <summary>
-        /// cpUser control.
+        /// ASPxCallbackPanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxCallbackPanel cpUser;
+        protected global::DevExpress.Web.ASPxCallbackPanel ASPxCallbackPanel1;
         
         /// <summary>
-        /// txtUserId control.
+        /// txt_id control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtUserId;
+        protected global::DevExpress.Web.ASPxTextBox txt_id;
         
         /// <summary>
-        /// cbCurrency control.
+        /// cb_currency control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxComboBox cbCurrency;
+        protected global::DevExpress.Web.ASPxComboBox cb_currency;
         
         /// <summary>
-        /// txtUsername control.
+        /// txt_username control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtUsername;
+        protected global::DevExpress.Web.ASPxTextBox txt_username;
         
         /// <summary>
-        /// txtPassword control.
+        /// txt_password control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtPassword;
+        protected global::DevExpress.Web.ASPxTextBox txt_password;
         
         /// <summary>
-        /// txtEmail control.
+        /// txt_Email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtEmail;
+        protected global::DevExpress.Web.ASPxTextBox txt_Email;
         
         /// <summary>
-        /// cbLanguage control.
+        /// cb_language control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxComboBox cbLanguage;
+        protected global::DevExpress.Web.ASPxComboBox cb_language;
         
         /// <summary>
-        /// cbCubename control.
+        /// cb_cubename control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxComboBox cbCubename;
+        protected global::DevExpress.Web.ASPxComboBox cb_cubename;
         
         /// <summary>
-        /// cbConcern control.
+        /// cb_concern control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxComboBox cbConcern;
+        protected global::DevExpress.Web.ASPxComboBox cb_concern;
         
         /// <summary>
-        /// cbUser control.
+        /// cb_user control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxComboBox cbUser;
+        protected global::DevExpress.Web.ASPxComboBox cb_user;
         
         /// <summary>
         /// img_status control.
@@ -175,31 +166,31 @@ namespace DdDReportAdmin {
         protected global::DevExpress.Web.ASPxImage img_status;
         
         /// <summary>
-        /// btnShow control.
+        /// btn_show control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxButton btnShow;
+        protected global::DevExpress.Web.ASPxButton btn_show;
         
         /// <summary>
-        /// btnDelete control.
+        /// btn_delete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxButton btnDelete;
+        protected global::DevExpress.Web.ASPxButton btn_delete;
         
         /// <summary>
-        /// btnSave control.
+        /// btn_save control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxButton btnSave;
+        protected global::DevExpress.Web.ASPxButton btn_save;
         
         /// <summary>
         /// Msg control.
@@ -211,12 +202,12 @@ namespace DdDReportAdmin {
         protected global::DevExpress.Web.ASPxLabel Msg;
         
         /// <summary>
-        /// pcPop control.
+        /// ASPxPopupControl1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxPopupControl pcPop;
+        protected global::DevExpress.Web.ASPxPopupControl ASPxPopupControl1;
     }
 }

@@ -699,6 +699,19 @@ namespace DdDReportAdmin
             }
 
         }
+
+        public static bool IsDuplicateUsername(string username)
+        {
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
+                cmd.Connection.Open();
+                cmd.CommandText = string.Format("SELECT count(*) from users2 where username = '{0}'", username);
+                int result = (int)cmd.ExecuteScalar();
+                return result > 0;
+            }
+        }
+
         public static DdDReportUser GetUser(string username)
         {
             DdDReportUser user = new DdDReportUser();
@@ -826,7 +839,6 @@ namespace DdDReportAdmin
                         user.ClientObjects.Add(c);
                     }
                 }
-
             }
 
 

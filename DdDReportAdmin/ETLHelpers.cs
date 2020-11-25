@@ -64,14 +64,7 @@ namespace DdDReportAdmin
                     if (res == null)
                     {
                         res = ConnectionHandler.SqlConnectionString;
-                        //conn.Close();
-                        //if (OleDB)
-                        //    return  String.Format("{0}Provider=SQLOLEDB", ConnectionHandler.sqlConnectionString);
-                        //else
-                        //    return ConnectionHandler.sqlConnectionString;
                     }
-                    // else
-                    // {
                     conn.Close();
                     if (OleDB)
                     {
@@ -81,9 +74,7 @@ namespace DdDReportAdmin
                     else
                     {
                         Helpers.Debug("ETL HELPER connstring : " + String.Format(res.ToString()));
-
-                        return res.ToString();
-                        // }
+                        return res.ToString().Replace("Connect Timeout=0", "Connect Timeout=30");
                     }
 
                 }

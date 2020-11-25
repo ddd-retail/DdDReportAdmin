@@ -13,6 +13,15 @@ namespace DdDReportAdmin {
     public partial class UserInformation {
         
         /// <summary>
+        /// rpUserInformation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxRoundPanel rpUserInformation;
+        
+        /// <summary>
         /// ASPxComboBox2 control.
         /// </summary>
         /// <remarks>

@@ -112,6 +112,7 @@
       <HintPath>..\packages\DevExpress.Web.19.2.9\lib\net452\DevExpress.Web.ASPxSpellChecker.v19.2.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevExpress.Web.ASPxThemes.v19.2, Version=19.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Web.ASPxTreeList.v19.2, Version=19.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <HintPath>..\packages\DevExpress.Web.19.2.9\lib\net452\DevExpress.Web.ASPxTreeList.v19.2.dll</HintPath>
       <Private>True</Private>
@@ -253,6 +254,7 @@
     </None>
     <Content Include="Logout.aspx" />
     <Content Include="MaintainUsers.aspx" />
+    <Content Include="MaintainUsers_old.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -349,6 +351,13 @@
     <Compile Include="MaintainUsers.aspx.designer.cs">
       <DependentUpon>MaintainUsers.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MaintainUsers_old.aspx.cs">
+      <DependentUpon>MaintainUsers_old.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MaintainUsers_old.aspx.designer.cs">
+      <DependentUpon>MaintainUsers_old.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MasterPage.Master.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -372,7 +381,9 @@
       <DependentUpon>UserInformation.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

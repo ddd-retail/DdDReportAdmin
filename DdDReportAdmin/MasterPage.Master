@@ -1,5 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs" Inherits="DdDReportAdmin.MasterPage" %>
-<%@ Register assembly="DevExpress.Web.v19.2, Version=19.2.9.0, Culture=neutral" namespace="DevExpress.Web" tagprefix="dx" %>
+
+<%@ Register Assembly="DevExpress.Web.v19.2, Version=19.2.9.0, Culture=neutral" Namespace="DevExpress.Web" TagPrefix="dx" %>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -9,8 +10,8 @@
     <title>DdDReport administration</title>
     <asp:ContentPlaceHolder id="main" runat="server">
     </asp:ContentPlaceHolder>
-    <link rel="stylesheet" href="styles/layout.css" type="text/css" />
-    <style type="text/css">
+    <%--<link rel="stylesheet" href="styles/layout.css" type="text/css" />--%>
+    <%--<style type="text/css">
 
         .style1
         {
@@ -21,85 +22,78 @@
         {
             width: 166px;
         }
-    </style>
+    </style>--%>
 </head>
 <body>
     <form id="form1" runat="server">
-    
-        <table class="style1">
+
+        <table runat="server">
             <tr>
-                <td class="style2">
-                    &nbsp;</td>
-                <td>
-                    &nbsp;</td>
-                <td>
-                    &nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
-            <tr>
-                <td id="leftColumn" valign="top">
-                    <%= DdDReportAdmin.HTMLHelpers.RoundedBoxTop("") %>
-                    <dx:ASPxNavBar ID="ASPxNavBar1" runat="server"
-                                     ImageFolder="images/" CssFilePath="styles/menu.css" 
-                                     CssPostfix="custom" CssClass="menu">
-                        <CollapseImage Url="images/menu-collapse.gif" />
-                        <ExpandImage Url="images/menu-expand.gif" />
-                        <Groups>
-                            <dx:NavBarGroup Name="DdDReport_user_administration" 
-                                Text="User information">
-                                <Items>
-                                    <dx:NavBarItem Name="Gen_information" Text="General information" 
-                                        NavigateUrl="~/UserInformation.aspx">
-                                    </dx:NavBarItem>
-                                </Items>
-                            </dx:NavBarGroup>
-                            <dx:NavBarGroup Name="group_adm" Text="Administration">
-                             <Items>
-                                    <dx:NavBarItem Name="user_create" Text="Maintain users" 
-                                        NavigateUrl="~/MaintainUsers.aspx">
-                                    </dx:NavBarItem>
-                                    <dx:NavBarItem Name="dist_report" Text="Distribute reports" 
-                                        NavigateUrl="~/DistributeReports.aspx">
-                                    </dx:NavBarItem>
-                                    <dx:NavBarItem Name="del_reports" NavigateUrl="~/ResetReports.aspx" 
-                                        Text="Reset Reports">
-                                    </dx:NavBarItem>
-                                </Items>
-                            </dx:NavBarGroup>
-                            <dx:NavBarGroup Name="grp_logout" 
-                                Text="Actions">
-                                <Items>
-                                    <dx:NavBarItem Name="itm_logout" Text="Logout" 
-                                        NavigateUrl="~/Logout.aspx">
-                                    </dx:NavBarItem>
-                                    <dx:NavBarItem Name="itm_logout2" Text="Back to DdDreport" 
-                                        NavigateUrl="~/Logout.aspx?back=true" Visible="false">
-                                    </dx:NavBarItem>
-                                </Items>
-                            </dx:NavBarGroup>
-                        </Groups>
-                    </dx:ASPxNavBar>
-                    <%= DdDReportAdmin.HTMLHelpers.RoundedBoxBottom() %>
+            <tr style="height: auto;">
+                <td valign="top">
+                    <dx:ASPxRoundPanel ID="rpMenu" runat="server" ShowCollapseButton="true">
+                        <HeaderTemplate>&nbsp;</HeaderTemplate>
+                        <PanelCollection>
+                            <dx:PanelContent>
+                                <dx:ASPxNavBar ID="ASPxNavBar1" runat="server">
+                                    <Groups>
+                                        <dx:NavBarGroup Name="DdDReport_user_administration"
+                                            Text="User information">
+                                            <Items>
+                                                <dx:NavBarItem Name="Gen_information" Text="General information"
+                                                    NavigateUrl="~/UserInformation.aspx">
+                                                </dx:NavBarItem>
+                                            </Items>
+                                        </dx:NavBarGroup>
+                                        <dx:NavBarGroup Name="group_adm" Text="Administration">
+                                            <Items>
+                                                <dx:NavBarItem Name="user_create" Text="Maintain users"
+                                                    NavigateUrl="~/MaintainUsers.aspx">
+                                                </dx:NavBarItem>
+                                                <dx:NavBarItem Name="dist_report" Text="Distribute reports"
+                                                    NavigateUrl="~/DistributeReports.aspx">
+                                                </dx:NavBarItem>
+                                                <dx:NavBarItem Name="del_reports" NavigateUrl="~/ResetReports.aspx"
+                                                    Text="Reset Reports">
+                                                </dx:NavBarItem>
+                                            </Items>
+                                        </dx:NavBarGroup>
+                                        <dx:NavBarGroup Name="grp_logout"
+                                            Text="Actions">
+                                            <Items>
+                                                <dx:NavBarItem Name="itm_logout" Text="Logout"
+                                                    NavigateUrl="~/Logout.aspx">
+                                                </dx:NavBarItem>
+                                                <dx:NavBarItem Name="itm_logout2" Text="Back to DdDreport"
+                                                    NavigateUrl="~/Logout.aspx?back=true" Visible="false">
+                                                </dx:NavBarItem>
+                                            </Items>
+                                        </dx:NavBarGroup>
+                                    </Groups>
+                                </dx:ASPxNavBar>
+                            </dx:PanelContent>
+                        </PanelCollection>
+                    </dx:ASPxRoundPanel>
                 </td>
                 <td rowspan="3" valign="top">
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
-        
-        </asp:ContentPlaceHolder>
+                    <asp:ContentPlaceHolder ID="cpMain" runat="server">
+                    </asp:ContentPlaceHolder>
                 </td>
-                <td>
-                    &nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
             <tr>
-                <td class="style2">
-                    &nbsp;</td>
-                <td>
-                    &nbsp;</td>
-                <td>
-                    &nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
         </table>
-    
-    <div>
-    </div>
+
+        <div>
+        </div>
     </form>
 </body>
 </html>
