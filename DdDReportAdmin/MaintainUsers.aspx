@@ -69,7 +69,6 @@
 						txtUsername.SetText("");
 						txtPassword.SetText("");
 						txtEmail.SetText("");
-						alert("delete sucess");
 
 						break;
 					}
@@ -79,8 +78,6 @@
 						btnShow.SetEnabled(false);
 						break;
 					}
-				case "saveError": alert("Could not save. Please correct errors"); break;
-				case "usernameTaken": alert("Username in use. Please enter another."); break;
 
 				default: lastAction = "";
 			}
@@ -348,6 +345,11 @@ else
 						</td>
 						<td>&nbsp;</td>
 					</tr>
+                    <tr>
+                        <td colspan="2">
+                            <dx:ASPxLabel ID="lblActionResult" runat="server" Text="" Font-Bold="true"></dx:ASPxLabel>
+                        </td>
+                    </tr>
 				</table>
 			</dx:PanelContent>
 		</PanelCollection>

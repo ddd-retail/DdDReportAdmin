@@ -18,6 +18,8 @@ namespace DdDReportAdmin
         {
             //check validation.
             Msg.Value = "secret message";
+            lblActionResult.Text = string.Empty;
+            lblActionResult.ForeColor = System.Drawing.Color.Transparent;
             if (e.Parameter == "new")
             {
                 this.txtUserId.Text = InformationProvider.GetNextId().ToString();
@@ -40,6 +42,8 @@ namespace DdDReportAdmin
                     DdDReportUser user = DdDReportUser.GetUser(cbSearch.SelectedItem.Text);
                     DdDReportUser.DeleteUser(user);
                 }
+                lblActionResult.Text = "Delete sucess.";
+                lblActionResult.ForeColor = System.Drawing.Color.Green;
             }
             else if (e.Parameter.StartsWith("save"))
             {
@@ -49,6 +53,8 @@ namespace DdDReportAdmin
                     !cbCubename.IsValid || !cbCurrency.IsValid || !cbLanguage.IsValid || !cbUser.IsValid)
                 {
                     FillComboboxes(null, false);
+                    lblActionResult.Text = "Could not save. Please correct errors";
+                    lblActionResult.ForeColor = System.Drawing.Color.Red;
                     return;
 
                 }
@@ -58,6 +64,8 @@ namespace DdDReportAdmin
                     txtUsername.ValidationSettings.ErrorText = "Username is in use. Enter another";
                     txtUsername.IsValid = false;
                     Msg.Value = "usernameTaken";
+                    lblActionResult.Text = "Could not save. Please correct errors";
+                    lblActionResult.ForeColor = System.Drawing.Color.Red;
                     return;
                 }
                 System.IO.File.AppendAllLines(@"C:\temp\adminReportLog.txt", new string[] { @"Got HIM" });
@@ -92,7 +100,8 @@ namespace DdDReportAdmin
                 Session["Save"] = "save";
                 this.HiddenField2.Value = "Save";
                 Msg.Value = "save";
-
+                lblActionResult.Text = "Saved sucess.";
+                lblActionResult.ForeColor = System.Drawing.Color.Green;
 
             }
             else
