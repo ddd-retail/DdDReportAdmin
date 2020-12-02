@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DdDRetail.Common.Logger.NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace DdDReportAdmin
 {
     public partial class MaintainUsers : System.Web.UI.Page
     {
+        private static NLogger logger = new NLogger(nameof(MaintainUsers));
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -20,6 +23,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
+                logger.Warn($"Error in PageLoad: {ex.Message}");
             }
             if (Session["userID"] == null)
                 Response.Redirect("Login.aspx");
@@ -161,7 +165,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
-                File.AppendAllLines("errors.log", new[] { $@"Error in MaintainUsers.cpUserCallback(): {ex.Message}", ex.StackTrace });
+                logger.Error($"Error in {nameof(cpUser_Callback)}: {ex.Message}");
                 throw;
             }
         }
@@ -187,7 +191,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
-                File.AppendAllLines("errors.log", new[] { $@"Error in MaintainUsers.cbControlPanelCallback(): {ex.Message}", ex.StackTrace });
+                logger.Error($"Error in {nameof(cpControlPanel_Callback)}: {ex.Message}");
                 throw;
             }
         }
@@ -326,7 +330,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
-                File.AppendAllLines("errors.log", new[] { $@"Error in MaintainUsers.FillComboboxes(): {ex.Message}", ex.StackTrace });
+                logger.Error($"Error in {nameof(FillComboboxes)}: {ex.Message}");
                 throw;
             }
         }
@@ -365,7 +369,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
-                File.AppendAllLines("errors.log", new[] { $@"Error in MaintainUsers.cbConcern_Callback(): {ex.Message}", ex.StackTrace });
+                logger.Error($"Error in {nameof(cbConcern_Callback)}: {ex.Message}");
                 throw;
             }
         }
@@ -386,6 +390,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
+                logger.Error($"Error in {nameof(GetImageName)}({dataValue}): {ex.Message}");
             }
             return "";
 

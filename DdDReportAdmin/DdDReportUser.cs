@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using DdDRetail.Common.Logger.NLog;
 using NLog;
 
 namespace DdDReportAdmin
@@ -32,7 +33,7 @@ namespace DdDReportAdmin
         private bool clientsConnected;
         private string concern;
 
-        private static readonly Logger _logger = new LogFactory().GetCurrentClassLogger();
+        private static NLogger logger = new NLogger(nameof(DdDReportUser));
 
         public DdDReportUser()
         {
@@ -239,6 +240,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
+                logger.Error($"Error in {nameof(UpdateUser)}: {ex.Message}");
             }
         }
 
@@ -296,6 +298,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
+                logger.Error($"Error in {nameof(InsertUser)}: {ex.Message}");
             }
         }
 
@@ -322,6 +325,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
+                logger.Error($"Error in {nameof(DeleteClient)}: {ex.Message}");
             }
         }
 
@@ -342,6 +346,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
+                logger.Error($"Error in {nameof(AddClient)}: {ex.Message}");
             }
         }
 
@@ -372,6 +377,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
+                logger.Error($"Error in {nameof(DeleteUser)}: {ex.Message}");
             }
         }
 
@@ -470,100 +476,18 @@ namespace DdDReportAdmin
                     return users;
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                logger.Error($"Error in {nameof(GetRecepientsUsers)}: {ex.Message}");
+            }
             return users;
         }
-
-        //        List<DdDReportUser> MarkForFiltering = new List<DdDReportUser>();
-        //        //Filter users that the concernuser may not see
-        //        DdDReportUser loginuser = DdDReportUser.GetUser(Convert.ToInt32(HttpContext.Current.Session["users2ID"]));
-        //        //using (System.IO.TextWriter l = new System.IO.StreamWriter(@"C:\inetpub\wwwroot\poolog.txt", true))
-        //        //{
-        //        //    l.WriteLine(DateTime.Now + ": inside get users");
-        //        //}
-        //        //Pool tjek fix
-        //        //  return users;
-
-        //        foreach (DdDReportUser user in users)
-        //        {
-
-        //            cmd.CommandText = string.Format("SELECT clientid from userclientsrelation where userid = '{0}'", user.Id);
-        //            using (SqlDataReader reader = cmd.ExecuteReader())
-        //            {
-        //                while (reader.Read())
-        //                {
-        //                    string clientNumber = reader.GetValue(0).ToString();
-        //                    if (usertype == "2") //Concerns only
-        //                    {
-        //                        foreach (string loginclient in loginuser.Clients)
-        //                            if (loginclient.StartsWith(clientNumber.Substring(0, 3)))
-        //                            {
-        //                                user.Clients.Add(clientNumber);
-        //                                Client c = new Client();
-        //                                c.ClientID = Convert.ToInt32(reader.GetValue(0));
-        //                                c.Name = InformationProvider.GetClientName(c.ClientID.ToString());
-        //                                user.ClientObjects.Add(c);
-        //                            }
-        //                            else
-        //                            {
-        //                                MarkForFiltering.Add(user);
-        //                                //skip
-        //                            }
-        //                    }
-        //                    else
-        //                    {
-        //                        user.Clients.Add(clientNumber);
-        //                        Client c = new Client();
-        //                        c.ClientID = Convert.ToInt32(reader.GetValue(0));
-        //                        c.Name = InformationProvider.GetClientName(c.ClientID.ToString());
-        //                        c.Selected = true;
-        //                        user.ClientObjects.Add(c);
-        //                    }
-        //                }
-        //            }
-
-
-        //            cmd.CommandText = string.Format("SELECT usertype from administrativeusers where users2id = '{0}'", user.id);
-        //            var res = cmd.ExecuteScalar();
-
-        //            if (res == null)
-        //                user.UserType = "-1";
-        //            else
-        //            {
-        //                user.UserType = res.ToString();
-        //            }
-
-        //        }
-        //        for (int a = 0; a < MarkForFiltering.Count(); a++)
-        //        {
-        //            DdDReportUser u = MarkForFiltering[a];
-        //            users.Remove(u);
-        //        }
-
-
-        //    }
-
-        //    foreach (DdDReportUser u in users)
-        //        GetConcerns(control, u.cubename);
-        //    return users;
-        //}
-        //catch (Exception ex)
-        //{
-        //    using (System.IO.TextWriter l = new System.IO.StreamWriter(@"C:\inetpub\wwwroot\ReportAdminError.txt", true))
-        //    {
-        //        l.WriteLine(DateTime.Now + ": " + ex.Message + "\n" + ex.StackTrace);
-        //    }
-        //    return new List<DdDReportUser>();
-        //}
 
         public static List<DdDReportUser> GetUsers(string usertype, string control, string concern)
         {
             try
             {
                 List<DdDReportUser> users = new List<DdDReportUser>();
-
-
-
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
@@ -668,36 +592,50 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                logger.Error($"Error in {nameof(GetUsers)}: {ex.Message}");
                 return new List<DdDReportUser>();
             }
         }
         public static string GetCubeName(string username)
         {
-            using (SqlCommand cmd = new SqlCommand())
+            try
             {
-                cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                cmd.Connection.Open();
-                cmd.CommandText = string.Format("SELECT cubename from users2 where username = '{0}'", username);
-                string res = cmd.ExecuteScalar().ToString();
-                cmd.Connection.Close();
-                return res;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
+                    cmd.Connection.Open();
+                    cmd.CommandText = string.Format("SELECT cubename from users2 where username = '{0}'", username);
+                    string res = cmd.ExecuteScalar().ToString();
+                    cmd.Connection.Close();
+                    return res;
+                }
             }
-
+            catch (Exception ex)
+            {
+                logger.Error($"Error in {nameof(GetCubeName)}({username}): {ex.Message}");
+                throw;
+            }
         }
 
         public static string GetCubeName(int id)
         {
-            using (SqlCommand cmd = new SqlCommand())
+            try
             {
-                cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                cmd.Connection.Open();
-                cmd.CommandText = string.Format("SELECT cubename from users2 where id = '{0}'", id);
-                string res = cmd.ExecuteScalar().ToString();
-                cmd.Connection.Close();
-                return res;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
+                    cmd.Connection.Open();
+                    cmd.CommandText = string.Format("SELECT cubename from users2 where id = '{0}'", id);
+                    string res = cmd.ExecuteScalar().ToString();
+                    cmd.Connection.Close();
+                    return res;
+                }
             }
-
+            catch (Exception ex)
+            {
+                logger.Error($"Error in {nameof(GetCubeName)}({id}): {ex.Message}");
+                throw;
+            }
         }
 
         public static bool IsDuplicateUsername(string username)
@@ -714,169 +652,192 @@ namespace DdDReportAdmin
 
         public static DdDReportUser GetUser(string username)
         {
-            DdDReportUser user = new DdDReportUser();
-            user.username = username;
-            using (SqlCommand cmd = new SqlCommand())
+            try
             {
-                cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                cmd.Connection.Open();
-                cmd.CommandText = string.Format("SELECT username,password,email,cubename,currency,language,id from users2 where username = '{0}'", username);
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                DdDReportUser user = new DdDReportUser();
+                user.username = username;
+                using (SqlCommand cmd = new SqlCommand())
                 {
-                    while (reader.Read())
+                    cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
+                    cmd.Connection.Open();
+                    cmd.CommandText = string.Format("SELECT username,password,email,cubename,currency,language,id from users2 where username = '{0}'", username);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        user.password = reader.GetValue(1).ToString();
-                        user.email = reader.GetValue(2).ToString();
-                        user.cubename = reader.GetValue(3).ToString();
-                        user.currency = reader.GetValue(4).ToString();
-                        user.language = reader.GetValue(5).ToString();
-                        user.Id = reader.GetValue(6).ToString();
+                        while (reader.Read())
+                        {
+                            user.password = reader.GetValue(1).ToString();
+                            user.email = reader.GetValue(2).ToString();
+                            user.cubename = reader.GetValue(3).ToString();
+                            user.currency = reader.GetValue(4).ToString();
+                            user.language = reader.GetValue(5).ToString();
+                            user.Id = reader.GetValue(6).ToString();
 
+                        }
+
+                        reader.Close();
                     }
 
-                    reader.Close();
+                    if (string.IsNullOrEmpty(user.id))
+                        return user;
+
+                    cmd.CommandText = string.Format("SELECT userType,Concern from administrativeusers where users2id = '{0}'", user.id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            user.userType = reader.GetValue(0).ToString();
+                            user.Concern = reader.GetValue(1).ToString();
+                        }
+
+                        reader.Close();
+                    }
+
+                }
+                using (var log = new StreamWriter(@"C:\temp\adminReportLog.txt", true))
+                {
+                    log.AutoFlush = true;
+                    log.WriteLine("Cube for user is: " + user.Cubename);
+                }
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(user.Cubename, false));
+                    cmd.Connection.Open();
+                    cmd.CommandText = string.Format("SELECT clientid from {1}.dbo.userclientsrelation where userid = '{0}'", user.Id, user.Cubename);
+                    //using (System.IO.StreamWriter log = new System.IO.StreamWriter(@"C:\inetpub\wwwroot\reportadmlog.txt", true))
+                    //{
+                    //    log.AutoFlush = true;
+                    //    log.WriteLine("Getting the clients for user : " + user.id);
+                    //}
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            user.Clients.Add(reader.GetValue(0).ToString());
+                            Client c = new Client();
+                            c.ClientID = Convert.ToInt32(reader.GetValue(0));
+                            c.Name = InformationProvider.GetClientName(c.ClientID.ToString());
+                            user.ClientObjects.Add(c);
+                        }
+                    }
+
+                }
+
+                GetConcerns(HttpContext.Current.Session["userType"].ToString(), user.cubename);
+                return user;
+            }
+            catch (Exception ex)
+            {
+                logger.Error($"Error in {nameof(GetUser)}({username}): {ex.Message}");
+                throw;
+            }
+        }
+
+        public static DdDReportUser GetUser(int id)
+        {
+            try
+            {
+                DdDReportUser user = new DdDReportUser();
+                //  user = username;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    //using (System.IO.TextWriter l = new System.IO.StreamWriter(@"C:\inetpub\wwwroot\poolog.txt", true))
+                    //{
+                    //    l.WriteLine(DateTime.Now + ": inside get image");
+                    //}
+                    cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
+                    cmd.Connection.Open();
+                    cmd.CommandText = string.Format("SELECT username,password,email,cubename,currency,language,id from users2 where id = '{0}'", id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            user.username = reader.GetValue(0).ToString();
+                            user.password = reader.GetValue(1).ToString();
+                            user.email = reader.GetValue(2).ToString();
+                            user.cubename = reader.GetValue(3).ToString();
+                            user.currency = reader.GetValue(4).ToString();
+                            user.language = reader.GetValue(5).ToString();
+                            user.Id = reader.GetValue(6).ToString();
+
+
+                        }
+
+                        reader.Close();
+                    }
+
                 }
 
                 if (string.IsNullOrEmpty(user.id))
                     return user;
 
-                cmd.CommandText = string.Format("SELECT userType,Concern from administrativeusers where users2id = '{0}'", user.id);
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlCommand cmd = new SqlCommand())
                 {
-                    while (reader.Read())
+                    cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(user.Cubename, false));
+                    cmd.Connection.Open();
+                    cmd.CommandText = string.Format("SELECT clientid from {1}.dbo.userclientsrelation where userid = '{0}'", user.Id, user.Cubename);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        user.userType = reader.GetValue(0).ToString();
-                        user.Concern = reader.GetValue(1).ToString();
-                    }
-
-                    reader.Close();
-                }
-
-            }
-            using (var log = new StreamWriter(@"C:\temp\adminReportLog.txt", true))
-            {
-                log.AutoFlush = true;
-                log.WriteLine("Cube for user is: " + user.Cubename);
-            }
-            using (SqlCommand cmd = new SqlCommand())
-            {
-                cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(user.Cubename, false));
-                cmd.Connection.Open();
-                cmd.CommandText = string.Format("SELECT clientid from {1}.dbo.userclientsrelation where userid = '{0}'", user.Id, user.Cubename);
-                //using (System.IO.StreamWriter log = new System.IO.StreamWriter(@"C:\inetpub\wwwroot\reportadmlog.txt", true))
-                //{
-                //    log.AutoFlush = true;
-                //    log.WriteLine("Getting the clients for user : " + user.id);
-                //}
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        user.Clients.Add(reader.GetValue(0).ToString());
-                        Client c = new Client();
-                        c.ClientID = Convert.ToInt32(reader.GetValue(0));
-                        c.Name = InformationProvider.GetClientName(c.ClientID.ToString());
-                        user.ClientObjects.Add(c);
+                        while (reader.Read())
+                        {
+                            user.Clients.Add(reader.GetValue(0).ToString());
+                            Client c = new Client();
+                            c.ClientID = Convert.ToInt32(reader.GetValue(0));
+                            c.Name = InformationProvider.GetClientName(c.ClientID.ToString());
+                            c.Selected = true;
+                            user.ClientObjects.Add(c);
+                        }
                     }
                 }
 
-            }
 
-            GetConcerns(HttpContext.Current.Session["userType"].ToString(), user.cubename);
-            return user;
-        }
+                GetConcerns(HttpContext.Current.Session["userType"].ToString(), user.cubename);
 
-        public static DdDReportUser GetUser(int id)
-        {
-            DdDReportUser user = new DdDReportUser();
-            //  user = username;
-            using (SqlCommand cmd = new SqlCommand())
-            {
-                //using (System.IO.TextWriter l = new System.IO.StreamWriter(@"C:\inetpub\wwwroot\poolog.txt", true))
-                //{
-                //    l.WriteLine(DateTime.Now + ": inside get image");
-                //}
-                cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                cmd.Connection.Open();
-                cmd.CommandText = string.Format("SELECT username,password,email,cubename,currency,language,id from users2 where id = '{0}'", id);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        user.username = reader.GetValue(0).ToString();
-                        user.password = reader.GetValue(1).ToString();
-                        user.email = reader.GetValue(2).ToString();
-                        user.cubename = reader.GetValue(3).ToString();
-                        user.currency = reader.GetValue(4).ToString();
-                        user.language = reader.GetValue(5).ToString();
-                        user.Id = reader.GetValue(6).ToString();
-
-
-                    }
-
-                    reader.Close();
-                }
-
-            }
-
-            if (string.IsNullOrEmpty(user.id))
                 return user;
-
-            using (SqlCommand cmd = new SqlCommand())
-            {
-                cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(user.Cubename, false));
-                cmd.Connection.Open();
-                cmd.CommandText = string.Format("SELECT clientid from {1}.dbo.userclientsrelation where userid = '{0}'", user.Id, user.Cubename);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        user.Clients.Add(reader.GetValue(0).ToString());
-                        Client c = new Client();
-                        c.ClientID = Convert.ToInt32(reader.GetValue(0));
-                        c.Name = InformationProvider.GetClientName(c.ClientID.ToString());
-                        c.Selected = true;
-                        user.ClientObjects.Add(c);
-                    }
-                }
             }
-
-
-            GetConcerns(HttpContext.Current.Session["userType"].ToString(), user.cubename);
-
-            return user;
+            catch (Exception ex)
+            {
+                logger.Error($"Error in {nameof(GetUser)}({id}): {ex.Message}");
+                throw;
+            }
         }
 
         public static List<string> GetConcerns(string controlType, string cubename)
         {
-
-            List<string> cs = new List<string>();
-            using (SqlCommand cmd = new SqlCommand())
+            try
             {
-
-                cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(cubename, false));
-                cmd.Connection.Open();
-                switch (controlType)
+                List<string> cs = new List<string>();
+                using (SqlCommand cmd = new SqlCommand())
                 {
 
-                    case "0":
-                    case "1": cmd.CommandText = string.Format("SELECT concern from chainconcernrelation where chain in (select id from chain where name = '{0}')", cubename); break;
-                    case "2": cmd.CommandText = string.Format("SELECT concern from chainconcernrelation where concern = '{0}'", HttpContext.Current.Session["concern"]); break;
-                    default: cmd.CommandText = string.Format("SELECT concern from chainconcernrelation where chain in (select id from chain where name = '{0}')", cubename); break;
-                }
-                //Remember to look up name in koncern file.
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
+                    cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(cubename, false));
+                    cmd.Connection.Open();
+                    switch (controlType)
                     {
-                        cs.Add(reader.GetValue(0).ToString());
-                    }
-                    reader.Close();
-                }
 
-                cmd.Connection.Close();
+                        case "0":
+                        case "1": cmd.CommandText = string.Format("SELECT concern from chainconcernrelation where chain in (select id from chain where name = '{0}')", cubename); break;
+                        case "2": cmd.CommandText = string.Format("SELECT concern from chainconcernrelation where concern = '{0}'", HttpContext.Current.Session["concern"]); break;
+                        default: cmd.CommandText = string.Format("SELECT concern from chainconcernrelation where chain in (select id from chain where name = '{0}')", cubename); break;
+                    }
+                    //Remember to look up name in koncern file.
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            cs.Add(reader.GetValue(0).ToString());
+                        }
+                        reader.Close();
+                    }
+
+                    cmd.Connection.Close();
+                }
+                return cs;
             }
-            return cs;
+            catch (Exception ex)
+            {
+                logger.Error($"Error in {nameof(GetConcerns)}: {ex.Message}");
+                throw;
+            }
         }
 
         public static List<Client> GetClients(DdDReportUser user)
@@ -888,27 +849,35 @@ namespace DdDReportAdmin
         }
         public string GetLog(DevExpress.Web.ASPxListBox list)
         {
-            StringBuilder sb = new StringBuilder();
-            DateTime lastmonth = DateTime.Now;
-            lastmonth = lastmonth.AddMonths(-1);
-            using (SqlCommand cmd = new SqlCommand())
+            try
             {
-                cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(this.Cubename, false));
-                cmd.Connection.Open();
-                cmd.CommandText = string.Format("SELECT time,message from logentry where userid = '{0}' and time> '{1}' order by time asc", this.Id, lastmonth.ToString("yyyy/MM/dd"));
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                StringBuilder sb = new StringBuilder();
+                DateTime lastmonth = DateTime.Now;
+                lastmonth = lastmonth.AddMonths(-1);
+                using (SqlCommand cmd = new SqlCommand())
                 {
-                    while (reader.Read())
+                    cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(this.Cubename, false));
+                    cmd.Connection.Open();
+                    cmd.CommandText = string.Format("SELECT time,message from logentry where userid = '{0}' and time> '{1}' order by time asc", this.Id, lastmonth.ToString("yyyy/MM/dd"));
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        if (reader.GetValue(1).ToString() == "Login Success")
-                            list.Items.Add("*****************NEW SESSION************************");
-                        list.Items.Add(reader.GetValue(0) + ": " + reader.GetValue(1));
+                        while (reader.Read())
+                        {
+                            if (reader.GetValue(1).ToString() == "Login Success")
+                                list.Items.Add("*****************NEW SESSION************************");
+                            list.Items.Add(reader.GetValue(0) + ": " + reader.GetValue(1));
+                        }
+                        reader.Close();
                     }
-                    reader.Close();
+                    cmd.Connection.Close();
                 }
-                cmd.Connection.Close();
+                return sb.ToString();
             }
-            return sb.ToString();
+            catch (Exception ex)
+            {
+                logger.Error($"Error in {nameof(GetLog)}: {ex.Message}");
+                throw;
+            }
         }
 
         public void GetLastTransactionDate()
@@ -933,7 +902,7 @@ namespace DdDReportAdmin
             }
             catch (Exception ex)
             {
-                File.AppendAllLines("errors.log", new[] { $@"Error in DdDReportUser.GetLastTransactionDate(): {ex.Message}", ex.StackTrace });
+                logger.Error($"Error in {nameof(GetLastTransactionDate)}: {ex.Message}");
                 throw;
             }
         }
