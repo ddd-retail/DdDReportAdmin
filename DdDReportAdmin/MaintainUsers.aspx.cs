@@ -13,8 +13,8 @@ namespace DdDReportAdmin
         {
             try
             {
-                this.HiddenField1.Value = Session["userType"].ToString();
-                this.HiddenField2.Value = Session["save"].ToString();
+                this.HiddenField1.Value = Session["userType"]?.ToString();
+                this.HiddenField2.Value = Session["save"]?.ToString();
 
             }
             catch (Exception ex)
@@ -26,9 +26,9 @@ namespace DdDReportAdmin
             if (!Page.IsCallback && !Page.IsPostBack)
             {
                 this.cbSearch.Items.Clear();
-                string usertype = Session["userType"].ToString();
-                string control = Session["control"].ToString();
-                string concern = Session["concern"].ToString();
+                string usertype = Session["userType"]?.ToString();
+                string control = Session["control"]?.ToString();
+                string concern = Session["concern"]?.ToString();
 
 
                 Dictionary<string, string> validUsers = DdDReportUser.Userlist(usertype, control, concern);
