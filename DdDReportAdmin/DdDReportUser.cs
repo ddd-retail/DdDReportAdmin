@@ -913,21 +913,28 @@ namespace DdDReportAdmin
 
         public void GetLastTransactionDate()
         {
-
-            using (SqlCommand cmd = new SqlCommand())
+            try
             {
-                cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(this.Cubename, false));
-                cmd.Connection.Open();
-                cmd.CommandText = string.Format("select distinct klient_navn from store{0} where klient_id = '{1}'", this.cubename, this.clients[0]);
-                string storename = cmd.ExecuteScalar().ToString();
-                var d = ETLHelpers.LastSaleDate(cubename, storename);
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(this.Cubename, false));
+                    cmd.Connection.Open();
+                    cmd.CommandText = string.Format("select distinct klient_navn from store{0} where klient_id = '{1}'", this.cubename, this.clients[0]);
+                    string storename = cmd.ExecuteScalar().ToString();
+                    var d = ETLHelpers.LastSaleDate(cubename, storename);
 
-                if (d == null)
-                    d = DateTime.MinValue;
+                    if (d == null)
+                        d = DateTime.MinValue;
 
-                this.lastTransactionDate = Convert.ToDateTime(d);
+                    this.lastTransactionDate = Convert.ToDateTime(d);
 
-                cmd.Connection.Close();
+                    cmd.Connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllLines("errors.log", new[] { $@"Error in DdDReportUser.GetLastTransactionDate(): {ex.Message}", ex.StackTrace });
+                throw;
             }
         }
 

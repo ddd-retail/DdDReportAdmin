@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,28 +12,43 @@ namespace DdDReportAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (Session["userID"] == null)
-                Response.Redirect("Login.aspx");
-
-            if (!IsPostBack)
+            try
             {
-                List<DdDReportUser> users = DdDReportUser.GetUsers(Session["userType"].ToString(), Session["control"].ToString(), Session["concern"].ToString());
-                foreach (DdDReportUser user in users)
-                {
-                    this.ASPxComboBox1.Items.Add(user.Username, user.Id);
-                }
+                if (Session["userID"] == null)
+                    Response.Redirect("Login.aspx");
 
+                if (!IsPostBack)
+                {
+                    List<DdDReportUser> users = DdDReportUser.GetUsers(Session["userType"].ToString(), Session["control"].ToString(), Session["concern"].ToString());
+                    foreach (DdDReportUser user in users)
+                    {
+                        this.ASPxComboBox1.Items.Add(user.Username, user.Id);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllLines("errors.log", new[] { $@"Error in ResetReports.Page_Load(): {ex.Message}", ex.StackTrace });
+                throw;
             }
         }
 
         protected void ASPxCallbackPanel1_Callback(object source, DevExpress.Web.CallbackEventArgsBase e)
         {
-            this.ASPxListBox1.Items.Clear();
-            DdDReportUser selectedUser = DdDReportUser.GetUser(this.ASPxComboBox1.Text);
-            foreach (string s in InformationProvider.getReports(selectedUser.Id))
+            try
             {
-                this.ASPxListBox1.Items.Add(s);
+                this.ASPxListBox1.Items.Clear();
+                DdDReportUser selectedUser = DdDReportUser.GetUser(this.ASPxComboBox1.Text);
+                foreach (string s in InformationProvider.getReports(selectedUser.Id))
+                {
+                    this.ASPxListBox1.Items.Add(s);
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllLines("errors.log", new[] { $@"Error in ResetReports.ASPxCallbackPanel1_Callback(): {ex.Message}", ex.StackTrace });
+                throw;
             }
 
         }

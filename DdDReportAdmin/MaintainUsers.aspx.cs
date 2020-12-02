@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -52,257 +53,281 @@ namespace DdDReportAdmin
 
         protected void cpUser_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
         {
-            //check validation.
-            Msg.Value = "secret message";
-            lblActionResult.Text = string.Empty;
-            lblActionResult.ForeColor = System.Drawing.Color.Transparent;
-            if (e.Parameter == "new")
+            try
             {
-                this.txtUserId.Text = InformationProvider.GetNextId().ToString();
-                txtEmail.Text = "";
-                txtPassword.Text = "";
-                txtUsername.Text = "";
-                cbSearch.Items.Clear();
-                Msg.Value = "new";
-                FillComboboxes(null, false);
-            }
-            else if (e.Parameter == "delete")
-            {
-                if (cbSearch.SelectedItem.Text == "")
+                //check validation.
+                Msg.Value = "secret message";
+                lblActionResult.Text = string.Empty;
+                lblActionResult.ForeColor = System.Drawing.Color.Transparent;
+                if (e.Parameter == "new")
                 {
-                    DdDReportUser user = DdDReportUser.GetUser(txtUsername.Text);
-                    DdDReportUser.DeleteUser(user);
-                }
-                else
-                {
-                    DdDReportUser user = DdDReportUser.GetUser(cbSearch.SelectedItem.Text);
-                    DdDReportUser.DeleteUser(user);
-                }
-                lblActionResult.Text = "Delete sucess.";
-                lblActionResult.ForeColor = System.Drawing.Color.Green;
-            }
-            else if (e.Parameter.StartsWith("save"))
-            {
-                System.IO.File.AppendAllLines(@"C:\temp\adminReportLog.txt", new string[] { @"SHOULD SAVE A USER" });
-                //validate
-                if (!txtUserId.IsValid || !txtEmail.IsValid || !txtUsername.IsValid || !txtPassword.IsValid ||
-                    !cbCubename.IsValid || !cbCurrency.IsValid || !cbLanguage.IsValid || !cbUser.IsValid)
-                {
+                    this.txtUserId.Text = InformationProvider.GetNextId().ToString();
+                    txtEmail.Text = "";
+                    txtPassword.Text = "";
+                    txtUsername.Text = "";
+                    cbSearch.Items.Clear();
+                    Msg.Value = "new";
                     FillComboboxes(null, false);
-                    lblActionResult.Text = "Could not save. Please correct errors";
-                    lblActionResult.ForeColor = System.Drawing.Color.Red;
-                    return;
-
                 }
-                System.IO.File.AppendAllLines(@"C:\temp\adminReportLog.txt", new string[] { @"Getting the User" });
-                if (DdDReportUser.IsDuplicateUsername(txtUsername.Text))
+                else if (e.Parameter == "delete")
                 {
-                    txtUsername.ValidationSettings.ErrorText = "Username is in use. Enter another";
-                    txtUsername.IsValid = false;
-                    Msg.Value = "usernameTaken";
-                    lblActionResult.Text = "Could not save. Please correct errors";
-                    lblActionResult.ForeColor = System.Drawing.Color.Red;
-                    return;
+                    if (cbSearch.SelectedItem.Text == "")
+                    {
+                        DdDReportUser user = DdDReportUser.GetUser(txtUsername.Text);
+                        DdDReportUser.DeleteUser(user);
+                    }
+                    else
+                    {
+                        DdDReportUser user = DdDReportUser.GetUser(cbSearch.SelectedItem.Text);
+                        DdDReportUser.DeleteUser(user);
+                    }
+                    lblActionResult.Text = "Delete sucess.";
+                    lblActionResult.ForeColor = System.Drawing.Color.Green;
                 }
-                System.IO.File.AppendAllLines(@"C:\temp\adminReportLog.txt", new string[] { @"Got HIM" });
-                //Tjek if exists else update.
-                DdDReportUser user = new DdDReportUser();
+                else if (e.Parameter.StartsWith("save"))
+                {
+                    System.IO.File.AppendAllLines(@"C:\temp\adminReportLog.txt", new string[] { @"SHOULD SAVE A USER" });
+                    //validate
+                    if (!txtUserId.IsValid || !txtEmail.IsValid || !txtUsername.IsValid || !txtPassword.IsValid ||
+                        !cbCubename.IsValid || !cbCurrency.IsValid || !cbLanguage.IsValid || !cbUser.IsValid)
+                    {
+                        FillComboboxes(null, false);
+                        lblActionResult.Text = "Could not save. Please correct errors";
+                        lblActionResult.ForeColor = System.Drawing.Color.Red;
+                        return;
 
-                //dummy fill
-                FillComboboxes(null, false);
+                    }
+                    System.IO.File.AppendAllLines(@"C:\temp\adminReportLog.txt", new string[] { @"Getting the User" });
+                    if (DdDReportUser.IsDuplicateUsername(txtUsername.Text))
+                    {
+                        txtUsername.ValidationSettings.ErrorText = "Username is in use. Enter another";
+                        txtUsername.IsValid = false;
+                        Msg.Value = "usernameTaken";
+                        lblActionResult.Text = "Could not save. Please correct errors";
+                        lblActionResult.ForeColor = System.Drawing.Color.Red;
+                        return;
+                    }
+                    System.IO.File.AppendAllLines(@"C:\temp\adminReportLog.txt", new string[] { @"Got HIM" });
+                    //Tjek if exists else update.
+                    DdDReportUser user = new DdDReportUser();
 
-                string[] args = e.Parameter.Split('#');
-                user.Id = txtUserId.Text;
-                user.Language = FetchValueFromCombobox(cbLanguage, args[1]);
-                user.Username = txtUsername.Text;
-                user.Password = txtPassword.Text;
-                user.Currency = FetchValueFromCombobox(cbCurrency, args[5]);
-                user.Cubename = args[2];
-                user.Concern = args[3];
-                user.UserType = FetchValueFromCombobox(cbUser, args[4]);
-                user.Email = txtEmail.Text;
+                    //dummy fill
+                    FillComboboxes(null, false);
 
-                DdDReportUser user2 = DdDReportUser.GetUser(Convert.ToInt32(user.Id));
-                System.IO.File.AppendAllLines(@"C:\temp\adminReportLog.txt", new string[] { @"Got HIM again" });
-                if (user2.Id == null || user2.Id == "")
-                    DdDReportUser.InsertUser(user);
+                    string[] args = e.Parameter.Split('#');
+                    user.Id = txtUserId.Text;
+                    user.Language = FetchValueFromCombobox(cbLanguage, args[1]);
+                    user.Username = txtUsername.Text;
+                    user.Password = txtPassword.Text;
+                    user.Currency = FetchValueFromCombobox(cbCurrency, args[5]);
+                    user.Cubename = args[2];
+                    user.Concern = args[3];
+                    user.UserType = FetchValueFromCombobox(cbUser, args[4]);
+                    user.Email = txtEmail.Text;
+
+                    DdDReportUser user2 = DdDReportUser.GetUser(Convert.ToInt32(user.Id));
+                    System.IO.File.AppendAllLines(@"C:\temp\adminReportLog.txt", new string[] { @"Got HIM again" });
+                    if (user2.Id == null || user2.Id == "")
+                        DdDReportUser.InsertUser(user);
+                    else
+                        DdDReportUser.UpdateUser(user);
+
+                    this.img_status.ImageUrl = GetImageName(user.Id);
+
+                    ///add to serach box
+                    this.cbSearch.Items.Add(user.Username);
+                    Session["Save"] = "save";
+                    this.HiddenField2.Value = "Save";
+                    Msg.Value = "save";
+                    lblActionResult.Text = "Saved sucess.";
+                    lblActionResult.ForeColor = System.Drawing.Color.Green;
+
+                }
                 else
-                    DdDReportUser.UpdateUser(user);
-
-                this.img_status.ImageUrl = GetImageName(user.Id);
-
-                ///add to serach box
-                this.cbSearch.Items.Add(user.Username);
-                Session["Save"] = "save";
-                this.HiddenField2.Value = "Save";
-                Msg.Value = "save";
-                lblActionResult.Text = "Saved sucess.";
-                lblActionResult.ForeColor = System.Drawing.Color.Green;
-
+                {
+                    int a = cbSearch.SelectedIndex;
+                    DdDReportUser user = new DdDReportUser();
+                    if (e.Parameter == "reload")
+                        user = DdDReportUser.GetUser(txtUsername.Text);
+                    else
+                        user = DdDReportUser.GetUser(cbSearch.SelectedItem.Text);
+                    this.txtUserId.Text = user.Id;
+                    this.txtEmail.Text = user.Email;
+                    this.txtPassword.Text = user.Password;
+                    this.txtUsername.Text = user.Username;
+                    FillComboboxes(user, true);
+                    this.img_status.ImageUrl = GetImageName(user.Id);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                int a = cbSearch.SelectedIndex;
-                DdDReportUser user = new DdDReportUser();
-                if (e.Parameter == "reload")
-                    user = DdDReportUser.GetUser(txtUsername.Text);
-                else
-                    user = DdDReportUser.GetUser(cbSearch.SelectedItem.Text);
-                this.txtUserId.Text = user.Id;
-                this.txtEmail.Text = user.Email;
-                this.txtPassword.Text = user.Password;
-                this.txtUsername.Text = user.Username;
-                FillComboboxes(user, true);
-                this.img_status.ImageUrl = GetImageName(user.Id);
+                File.AppendAllLines("errors.log", new[] { $@"Error in MaintainUsers.cpUserCallback(): {ex.Message}", ex.StackTrace });
+                throw;
             }
         }
 
         protected void cpControlPanel_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
         {
-            var cubename = cbSearch.Text;
-            this.cbSearch.Items.Clear();
-            string usertype = Session["userType"].ToString();
-            string control = Session["control"].ToString();
-            string concern = Session["concern"].ToString();
-
-
-            Dictionary<string, string> validUsers = DdDReportUser.UserlistByCube(usertype, control, concern, cubename);
-            foreach (string k in validUsers.Keys)
+            try
             {
-                if (DdDReportUser.UserHigherRightsThanMe(k, Convert.ToInt32(usertype)))
-                    continue;
-                this.cbSearch.Items.Add(validUsers[k], k);
+                var cubename = cbSearch.Text;
+                this.cbSearch.Items.Clear();
+                string usertype = Session["userType"].ToString();
+                string control = Session["control"].ToString();
+                string concern = Session["concern"].ToString();
+
+
+                Dictionary<string, string> validUsers = DdDReportUser.UserlistByCube(usertype, control, concern, cubename);
+                foreach (string k in validUsers.Keys)
+                {
+                    if (DdDReportUser.UserHigherRightsThanMe(k, Convert.ToInt32(usertype)))
+                        continue;
+                    this.cbSearch.Items.Add(validUsers[k], k);
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllLines("errors.log", new[] { $@"Error in MaintainUsers.cbControlPanelCallback(): {ex.Message}", ex.StackTrace });
+                throw;
             }
         }
 
         public void FillComboboxes(DdDReportUser user, bool focus)
         {
-            //Clear:
-            cbConcern.Items.Clear();
-            cbCubename.Items.Clear();
-            cbCurrency.Items.Clear();
-            cbLanguage.Items.Clear();
-            cbUser.Items.Clear();
-
-            switch (HttpContext.Current.Session["userType"].ToString())
+            try
             {
-                case "0":
-                    {
-                        cbUser.Items.Add("Normal user", "-1");
-                        cbUser.Items.Add("DdD Support", "0");
-                        cbUser.Items.Add("Cube administrator", "1");
-                        cbUser.Items.Add("Concern administrator", "2"); break;
-                    }
-                case "1":
-                    {
-                        cbUser.Items.Add("Normal user", "-1");
-                        cbUser.Items.Add("Cube administrator", "1");
-                        cbUser.Items.Add("Concern administrator", "2"); break;
-                    }
-                case "2":
-                    {
-                        cbUser.Items.Add("Normal user", "-1");
-                        cbUser.Items.Add("Concern administrator", "2"); break;
-                    }
-            }
+                //Clear:
+                cbConcern.Items.Clear();
+                cbCubename.Items.Clear();
+                cbCurrency.Items.Clear();
+                cbLanguage.Items.Clear();
+                cbUser.Items.Clear();
 
-            if (focus)
-            {
-                int a1 = 0;
-                for (int b = 0; b < cbUser.Items.Count; b++)
-                    if (((string)cbUser.Items[b].Value) == user.UserType)
-                        a1 = b;
-                cbUser.SelectedIndex = a1;
-            }
-            switch (HttpContext.Current.Session["userType"].ToString())
-            {
-                case "0":
-                    {
-
-                        List<string> cubes = InformationProvider.GetAllCubes();
-                        cubes.Sort();
-                        foreach (string s in cubes)
-                            cbCubename.Items.Add(s);
-
-                        break;
-                        //should chould choose
-                    }
-                case "1":
-                    {
-                        string cname = InformationProvider.GetCubeName(Convert.ToInt32(HttpContext.Current.Session["users2ID"]));
-
-                        cbCubename.Items.Add(cname);
-                        cbCubename.SelectedIndex = 0;
-                        cbCubename.ReadOnly = true;
-                        break;
-                    }
-                case "2":
-                    {
-                        string cname = InformationProvider.GetCubeName(Convert.ToInt32(HttpContext.Current.Session["users2ID"]));
-                        cbCubename.Items.Add(cname);
-                        cbCubename.SelectedIndex = 0;
-                        cbCubename.ReadOnly = true;
-                        break;
-                    }
-            }
-
-            if (focus)
-            {
-                for (int a = 0; a < cbCubename.Items.Count; a++)
+                switch (HttpContext.Current.Session["userType"].ToString())
                 {
-                    if (cbCubename.Items[a].Text == user.Cubename)
-                        cbCubename.SelectedIndex = a;
+                    case "0":
+                        {
+                            cbUser.Items.Add("Normal user", "-1");
+                            cbUser.Items.Add("DdD Support", "0");
+                            cbUser.Items.Add("Cube administrator", "1");
+                            cbUser.Items.Add("Concern administrator", "2"); break;
+                        }
+                    case "1":
+                        {
+                            cbUser.Items.Add("Normal user", "-1");
+                            cbUser.Items.Add("Cube administrator", "1");
+                            cbUser.Items.Add("Concern administrator", "2"); break;
+                        }
+                    case "2":
+                        {
+                            cbUser.Items.Add("Normal user", "-1");
+                            cbUser.Items.Add("Concern administrator", "2"); break;
+                        }
                 }
-            }
-            //Language:
-            cbLanguage.Items.Add("Danish", "da-DK");
-            cbLanguage.Items.Add("English", "en-GB");
-            cbLanguage.Items.Add("Swedish", "sv-SE");
-            cbLanguage.Items.Add("Norwegian", "nn-NO");
-            cbLanguage.Items.Add("German", "de-DE");
-            cbLanguage.Items.Add("French", "fr-FR");
-            if (focus)
-            {
-                for (int a = 0; a < cbLanguage.Items.Count; a++)
-                {
-                    if (((string)cbLanguage.Items[a].Value) == user.Language)
-                        cbLanguage.SelectedIndex = a;
-                }
-            }
-            //currency
-            cbCurrency.Items.Add("DKK", "dk");
-            cbCurrency.Items.Add("EUR", "eu");
-            cbCurrency.Items.Add("SKR", "se");
-            cbCurrency.Items.Add("NRK", "no");
-            cbCurrency.Items.Add("GBP", "uk");
-            cbCurrency.Items.Add("CHF", "ch");
-            cbCurrency.Items.Add("USD", "us");
-            cbCurrency.Items.Add("MUR", "mu");
-            cbCurrency.Items.Add("CAD", "ca");
-            if (focus)
-            {
-                for (int a = 0; a < cbCurrency.Items.Count; a++)
-                {
-                    if (((string)cbCurrency.Items[a].Value) == user.Currency)
-                        cbCurrency.SelectedIndex = a;
-                }
-            }
-            //concern:
 
-            if (user != null)
-            {
-                cbConcern.Items.Add(user.Concern);
-                cbConcern.SelectedIndex = 0;
-            }
-            else
-            {
-                string cname = InformationProvider.GetCubeName(Convert.ToInt32(HttpContext.Current.Session["users2ID"]));
-                List<string> concerns = DdDReportUser.GetConcerns(Session["userType"].ToString(), cname);
-                foreach (string s in concerns)
-                    cbConcern.Items.Add(s);
+                if (focus)
+                {
+                    int a1 = 0;
+                    for (int b = 0; b < cbUser.Items.Count; b++)
+                        if (((string)cbUser.Items[b].Value) == user.UserType)
+                            a1 = b;
+                    cbUser.SelectedIndex = a1;
+                }
+                switch (HttpContext.Current.Session["userType"].ToString())
+                {
+                    case "0":
+                        {
 
-                if (cbConcern.Items.Count > 0)
+                            List<string> cubes = InformationProvider.GetAllCubes();
+                            cubes.Sort();
+                            foreach (string s in cubes)
+                                cbCubename.Items.Add(s);
+
+                            break;
+                            //should chould choose
+                        }
+                    case "1":
+                        {
+                            string cname = InformationProvider.GetCubeName(Convert.ToInt32(HttpContext.Current.Session["users2ID"]));
+
+                            cbCubename.Items.Add(cname);
+                            cbCubename.SelectedIndex = 0;
+                            cbCubename.ReadOnly = true;
+                            break;
+                        }
+                    case "2":
+                        {
+                            string cname = InformationProvider.GetCubeName(Convert.ToInt32(HttpContext.Current.Session["users2ID"]));
+                            cbCubename.Items.Add(cname);
+                            cbCubename.SelectedIndex = 0;
+                            cbCubename.ReadOnly = true;
+                            break;
+                        }
+                }
+
+                if (focus)
+                {
+                    for (int a = 0; a < cbCubename.Items.Count; a++)
+                    {
+                        if (cbCubename.Items[a].Text == user.Cubename)
+                            cbCubename.SelectedIndex = a;
+                    }
+                }
+                //Language:
+                cbLanguage.Items.Add("Danish", "da-DK");
+                cbLanguage.Items.Add("English", "en-GB");
+                cbLanguage.Items.Add("Swedish", "sv-SE");
+                cbLanguage.Items.Add("Norwegian", "nn-NO");
+                cbLanguage.Items.Add("German", "de-DE");
+                cbLanguage.Items.Add("French", "fr-FR");
+                if (focus)
+                {
+                    for (int a = 0; a < cbLanguage.Items.Count; a++)
+                    {
+                        if (((string)cbLanguage.Items[a].Value) == user.Language)
+                            cbLanguage.SelectedIndex = a;
+                    }
+                }
+                //currency
+                cbCurrency.Items.Add("DKK", "dk");
+                cbCurrency.Items.Add("EUR", "eu");
+                cbCurrency.Items.Add("SKR", "se");
+                cbCurrency.Items.Add("NRK", "no");
+                cbCurrency.Items.Add("GBP", "uk");
+                cbCurrency.Items.Add("CHF", "ch");
+                cbCurrency.Items.Add("USD", "us");
+                cbCurrency.Items.Add("MUR", "mu");
+                cbCurrency.Items.Add("CAD", "ca");
+                if (focus)
+                {
+                    for (int a = 0; a < cbCurrency.Items.Count; a++)
+                    {
+                        if (((string)cbCurrency.Items[a].Value) == user.Currency)
+                            cbCurrency.SelectedIndex = a;
+                    }
+                }
+                //concern:
+
+                if (user != null)
+                {
+                    cbConcern.Items.Add(user.Concern);
                     cbConcern.SelectedIndex = 0;
+                }
+                else
+                {
+                    string cname = InformationProvider.GetCubeName(Convert.ToInt32(HttpContext.Current.Session["users2ID"]));
+                    List<string> concerns = DdDReportUser.GetConcerns(Session["userType"].ToString(), cname);
+                    foreach (string s in concerns)
+                        cbConcern.Items.Add(s);
+
+                    if (cbConcern.Items.Count > 0)
+                        cbConcern.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllLines("errors.log", new[] { $@"Error in MaintainUsers.FillComboboxes(): {ex.Message}", ex.StackTrace });
+                throw;
             }
         }
 
@@ -331,11 +356,18 @@ namespace DdDReportAdmin
 
         protected void cbConcern_Callback(object source, DevExpress.Web.CallbackEventArgsBase e)
         {
-            cbConcern.Items.Clear();
-            string cubename = e.Parameter;
-            foreach (string s in DdDReportUser.GetConcerns(Session["userType"].ToString(), cubename))
-                cbConcern.Items.Add(s);
-
+            try
+            {
+                cbConcern.Items.Clear();
+                string cubename = e.Parameter;
+                foreach (string s in DdDReportUser.GetConcerns(Session["userType"].ToString(), cubename))
+                    cbConcern.Items.Add(s);
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllLines("errors.log", new[] { $@"Error in MaintainUsers.cbConcern_Callback(): {ex.Message}", ex.StackTrace });
+                throw;
+            }
         }
 
         protected string GetImageName(object dataValue)
