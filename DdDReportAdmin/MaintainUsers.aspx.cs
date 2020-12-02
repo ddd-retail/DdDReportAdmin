@@ -11,7 +11,43 @@ namespace DdDReportAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
+                this.HiddenField1.Value = Session["userType"].ToString();
+                this.HiddenField2.Value = Session["save"].ToString();
 
+            }
+            catch (Exception ex)
+            {
+            }
+            if (Session["userID"] == null)
+                Response.Redirect("Login.aspx");
+
+            if (!Page.IsCallback && !Page.IsPostBack)
+            {
+                this.cbSearch.Items.Clear();
+                string usertype = Session["userType"].ToString();
+                string control = Session["control"].ToString();
+                string concern = Session["concern"].ToString();
+
+
+                Dictionary<string, string> validUsers = DdDReportUser.Userlist(usertype, control, concern);
+                foreach (string k in validUsers.Keys)
+                {
+                    if (DdDReportUser.UserHigherRightsThanMe(k, Convert.ToInt32(usertype)))
+                        continue;
+                    this.cbSearch.Items.Add(validUsers[k], k);
+                }
+
+                //fill cubename
+                if (usertype == "0")
+                {
+                    List<string> cubes = InformationProvider.GetAllCubes();
+                    cubes.Sort();
+                    foreach (string s in cubes)
+                        cbSearchCube.Items.Add(s);
+                }
+            }
         }
 
         protected void cpUser_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
