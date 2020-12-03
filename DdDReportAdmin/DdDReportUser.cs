@@ -310,7 +310,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(user.Cubename, false));
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
 
                     cmd.CommandText = string.Format("delete from {2}.dbo.userclientsrelation  where  userid = '{0}' and clientid = '{1}'", user.Id, client.ClientID, user.cubename);
@@ -338,7 +338,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(user.Cubename, false));
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = string.Format("Insert into {2}.dbo.userclientsrelation values ('{0}','{1}')", user.Id, client.ClientID, user.cubename);
                     cmd.ExecuteNonQuery();
@@ -361,7 +361,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = string.Format("delete from users2 where id = '{0}'", user.Id);
                     cmd.ExecuteNonQuery();
@@ -392,7 +392,7 @@ namespace DdDReportAdmin
             using (SqlCommand cmd = new SqlCommand())
             {
                 cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                 cmd.Connection.Open();
 
 
@@ -451,7 +451,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = CommandUserText(usertype, control, false, concern);
 
@@ -496,7 +496,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = CommandUserText(usertype, control, false, concern);
 
@@ -623,7 +623,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = string.Format("SELECT cubename from users2 where username = '{0}'", username);
                     string res = cmd.ExecuteScalar().ToString();
@@ -645,7 +645,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = string.Format("SELECT cubename from users2 where id = '{0}'", id);
                     string res = cmd.ExecuteScalar().ToString();
@@ -681,7 +681,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = string.Format("SELECT username,password,email,cubename,currency,language,id from users2 where username = '{0}'", username);
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -724,7 +724,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(user.Cubename, false));
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = string.Format("SELECT clientid from {1}.dbo.userclientsrelation where userid = '{0}'", user.Id, user.Cubename);
                     //using (System.IO.StreamWriter log = new System.IO.StreamWriter(@"C:\inetpub\wwwroot\reportadmlog.txt", true))
@@ -769,7 +769,7 @@ namespace DdDReportAdmin
                     //    l.WriteLine(DateTime.Now + ": inside get image");
                     //}
                     cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = string.Format("SELECT username,password,email,cubename,currency,language,id from users2 where id = '{0}'", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -798,7 +798,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(user.Cubename, false));
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = string.Format("SELECT clientid from {1}.dbo.userclientsrelation where userid = '{0}'", user.Id, user.Cubename);
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -835,7 +835,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(cubename, false));
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     switch (controlType)
                     {
@@ -883,7 +883,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(this.Cubename, false));
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = string.Format("SELECT time,message from logentry where userid = '{0}' and time> '{1}' order by time asc", this.Id, lastmonth.ToString("yyyy/MM/dd"));
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -914,7 +914,7 @@ namespace DdDReportAdmin
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = new SqlConnection(ETLHelpers.GetUserInterfaceConnectionString(this.Cubename, false));
-                    logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                    logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                     cmd.Connection.Open();
                     cmd.CommandText = string.Format("select distinct klient_navn from store{0} where klient_id = '{1}'", this.cubename, this.clients[0]);
                     string storename = cmd.ExecuteScalar().ToString();
@@ -948,7 +948,7 @@ namespace DdDReportAdmin
             using (SqlCommand cmd = new SqlCommand())
             {
                 cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                 cmd.Connection.Open();
                 cmd.CommandText = CommandUserText(usertype, control, true, concern);
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -973,7 +973,7 @@ namespace DdDReportAdmin
             using (SqlCommand cmd = new SqlCommand())
             {
                 cmd.Connection = new SqlConnection(ReportLibrary.ConnectionHandler.SqlConnectionString);
-                logger.Debug($"Connecting to {cmd.Connection.ConnectionString}");
+                logger.Error($"Connecting to {cmd.Connection.ConnectionString}");
                 cmd.Connection.Open();
                 cmd.CommandText = CommandUserText(usertype, control, true, concern);
                 using (SqlDataReader reader = cmd.ExecuteReader())
