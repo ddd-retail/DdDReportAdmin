@@ -30,6 +30,7 @@ namespace DdDReportAdmin
 
             if (!Page.IsCallback && !Page.IsPostBack && !cpControlPanel.IsCallback && !cpUser.IsCallback)
             {
+                logger.Info("Not a callback!");
                 this.cbSearch.Items.Clear();
                 string usertype = Session["userType"]?.ToString();
                 string control = Session["control"]?.ToString();
