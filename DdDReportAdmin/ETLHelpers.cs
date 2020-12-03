@@ -15,40 +15,47 @@ namespace DdDReportAdmin
 
         public static object LastSaleDate(string cubename, string storename)
         {
-            var adomdConnStr = ConnectionHandler.AdomdConnectionString(cubename);
             DateTime lastdate = DateTime.Now;
-
-            using (var con = new Microsoft.AnalysisServices.AdomdClient.AdomdConnection())
+            try
             {
-                con.ConnectionString = adomdConnStr;
-                //using (System.IO.StreamWriter log = new System.IO.StreamWriter(@"C:\inetpub\wwwroot\reportadmlog.txt", true))
-                //{
-                //    log.WriteLine("Using ado md string : " + con.ConnectionString);
-                //    log.AutoFlush = true;
-                //}
-                con.Open();
-                string query = "SELECT TAIL(FILTER([Time].[PK_Date].[PK_Date].members(0):ClosingPeriod([Time].[PK_Date].[PK_Date]),[Measures].[Afsætning] <> 0)) on columns " + String.Format("FROM [{0}] where [Store].[Klient_Navn].[Klient_Navn].&[{1}]", cubename, storename);
-
-                using (var adapter = new Microsoft.AnalysisServices.AdomdClient.AdomdDataAdapter(query, con))
+                var adomdConnStr = ConnectionHandler.AdomdConnectionString(cubename);
+       
+                using (var con = new Microsoft.AnalysisServices.AdomdClient.AdomdConnection())
                 {
-                    DataTable table = new DataTable();
-                    try
-                    {
-                        adapter.Fill(table);
-                        lastdate = ExtractStoreTime(table);
-                    }
-                    catch
-                    {
+                    con.ConnectionString = adomdConnStr;
+                    //using (System.IO.StreamWriter log = new System.IO.StreamWriter(@"C:\inetpub\wwwroot\reportadmlog.txt", true))
+                    //{
+                    //    log.WriteLine("Using ado md string : " + con.ConnectionString);
+                    //    log.AutoFlush = true;
+                    //}
+                    logger.Info($"Connection to ADODB {con.ConnectionString}");
+                    con.Open();
+                    string query = "SELECT TAIL(FILTER([Time].[PK_Date].[PK_Date].members(0):ClosingPeriod([Time].[PK_Date].[PK_Date]),[Measures].[Afsætning] <> 0)) on columns " + String.Format("FROM [{0}] where [Store].[Klient_Navn].[Klient_Navn].&[{1}]", cubename, storename);
 
-                        return null;
+                    using (var adapter = new Microsoft.AnalysisServices.AdomdClient.AdomdDataAdapter(query, con))
+                    {
+                        DataTable table = new DataTable();
+                        try
+                        {
+                            adapter.Fill(table);
+                            lastdate = ExtractStoreTime(table);
+                        }
+                        catch
+                        {
+
+                            return null;
+                        }
                     }
+
+                    //Helpers.debug("{0}, {1}", dates[0], dates[1]);
+
+                    con.Close();
                 }
-
-                //Helpers.debug("{0}, {1}", dates[0], dates[1]);
-
-                con.Close();
             }
-
+            catch (Exception ex)
+            {
+                logger.Error($"Error in {nameof(LastSaleDate)}({cubename}, {storename}): {ex.Message}");
+            }
             return lastdate;
         }
 
@@ -74,12 +81,13 @@ namespace DdDReportAdmin
                         if (OleDB)
                         {
                             Helpers.Debug("ETL HELPER connstring : " + String.Format("{0}Provider=SQLOLEDB", res.ToString()));
-                            return String.Format("{0};Provider=SQLOLEDB", res.ToString());
+                            return $"{res};Provider=SQLOLEDB";
                         }
                         else
                         {
                             Helpers.Debug("ETL HELPER connstring : " + String.Format(res.ToString()));
-                            return res.ToString().Replace("Connect Timeout=0", "Connect Timeout=30");
+                            res = res.ToString().Replace("Connect Timeout=0", "Connect Timeout=30");
+                            return $"{res}";
                         }
 
                     }
