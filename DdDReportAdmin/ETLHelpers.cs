@@ -1,4 +1,5 @@
-﻿using ReportLibrary;
+﻿using DdDRetail.Common.Logger.NLog;
+using ReportLibrary;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,6 +11,7 @@ namespace DdDReportAdmin
 {
     public class ETLHelpers
     {
+        private static NLogger logger = new NLogger(nameof(DdDReportUser));
 
         public static object LastSaleDate(string cubename, string storename)
         {
@@ -52,32 +54,41 @@ namespace DdDReportAdmin
 
         public static string GetUserInterfaceConnectionString(string chain, bool OleDB)
         {
-            //returns the default conn string if the database not has been migrated yet.
-            using (SqlConnection conn = new SqlConnection(ConnectionHandler.SqlConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand())
+                //returns the default conn string if the database not has been migrated yet.
+                using (SqlConnection conn = new SqlConnection(ConnectionHandler.SqlConnectionString))
                 {
-                    cmd.Connection = conn;
-                    cmd.CommandText = string.Format("select ConnString from ConnectionStrings where chain = '{0}'", chain);
-                    var res = cmd.ExecuteScalar();
-                    if (res == null)
+                    logger.Info($"Connecting to {conn.ConnectionString}");
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand())
                     {
-                        res = ConnectionHandler.SqlConnectionString;
-                    }
-                    conn.Close();
-                    if (OleDB)
-                    {
-                        Helpers.Debug("ETL HELPER connstring : " + String.Format("{0}Provider=SQLOLEDB", res.ToString()));
-                        return String.Format("{0};Provider=SQLOLEDB", res.ToString());
-                    }
-                    else
-                    {
-                        Helpers.Debug("ETL HELPER connstring : " + String.Format(res.ToString()));
-                        return res.ToString().Replace("Connect Timeout=0", "Connect Timeout=30");
-                    }
+                        cmd.Connection = conn;
+                        cmd.CommandText = string.Format("select ConnString from ConnectionStrings where chain = '{0}'", chain);
+                        var res = cmd.ExecuteScalar();
+                        if (res == null)
+                        {
+                            res = ConnectionHandler.SqlConnectionString;
+                        }
+                        conn.Close();
+                        if (OleDB)
+                        {
+                            Helpers.Debug("ETL HELPER connstring : " + String.Format("{0}Provider=SQLOLEDB", res.ToString()));
+                            return String.Format("{0};Provider=SQLOLEDB", res.ToString());
+                        }
+                        else
+                        {
+                            Helpers.Debug("ETL HELPER connstring : " + String.Format(res.ToString()));
+                            return res.ToString().Replace("Connect Timeout=0", "Connect Timeout=30");
+                        }
 
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                logger.Error($"Error in {nameof(GetUserInterfaceConnectionString)}({chain}, {OleDB}): {ex.Message}");
+                throw;
             }
         }
         private static DateTime ExtractStoreTime(DataTable table)
