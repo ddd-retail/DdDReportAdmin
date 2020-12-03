@@ -28,7 +28,7 @@ namespace DdDReportAdmin
             if (Session["userID"] == null)
                 Response.Redirect("Login.aspx");
 
-            if (!Page.IsCallback && !Page.IsPostBack)
+            if (!Page.IsCallback && !Page.IsPostBack && !cpControlPanel.IsCallback && !cpUser.IsCallback)
             {
                 this.cbSearch.Items.Clear();
                 string usertype = Session["userType"]?.ToString();
