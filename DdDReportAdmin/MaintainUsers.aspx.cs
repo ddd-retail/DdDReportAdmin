@@ -175,7 +175,7 @@ namespace DdDReportAdmin
         {
             try
             {
-                var cubename = cbSearch.Text;
+                var cubename = cbSearchCube.Text;
                 this.cbSearch.Items.Clear();
                 string usertype = Session["userType"].ToString();
                 string control = Session["control"].ToString();

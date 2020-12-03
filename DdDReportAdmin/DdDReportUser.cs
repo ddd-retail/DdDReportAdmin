@@ -996,7 +996,7 @@ namespace DdDReportAdmin
 
         public static Dictionary<string, string> UserlistByCube(string usertype, string control, string concern, string cubename)
         {
-
+            logger.Info($"Entering {nameof(UserlistByCube)}({usertype}, {control}, {concern}, {cubename})");
             Dictionary<string, string> vals = new Dictionary<string, string>();
             using (SqlCommand cmd = new SqlCommand())
             {
@@ -1025,11 +1025,6 @@ namespace DdDReportAdmin
             return vals;
 
         }
-
-        //public static List<Client> Possibleclients(DdDReportUser user)
-        //{
-        //    //return InformationProvider.AvailableClients((DdDReportUser)HttpContext.Current.Session["userObject"], new List<int>());
-        //}
 
         public static string CommandUserText(string usertype, string control, bool onlyUserName, string concern)
         {
