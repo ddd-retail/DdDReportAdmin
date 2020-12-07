@@ -61,8 +61,8 @@
 						<SettingsSelection Enabled="True" />
 						<Settings ShowColumnHeaders="False" ShowTreeLines="False" />
 						<Columns>
-							<dxwtl:TreeListTextColumn FieldName="Client" VisibleIndex="0">
-							</dxwtl:TreeListTextColumn>
+							<dx:TreeListTextColumn FieldName="Client" VisibleIndex="0">
+							</dx:TreeListTextColumn>
 						</Columns>
 						<Paddings PaddingLeft="0px" />
 					</dx:ASPxTreeList>
