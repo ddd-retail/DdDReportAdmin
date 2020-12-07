@@ -35,7 +35,7 @@
             </tr>
             <tr style="height: auto;">
                 <td valign="top">
-                    <dx:ASPxRoundPanel ID="rpMenu" runat="server" ShowCollapseButton="true">
+                    <dx:ASPxRoundPanel ID="rpMenu" runat="server" ShowCollapseButton="true" Theme="Office2010Blue">
                         <HeaderTemplate>&nbsp;</HeaderTemplate>
                         <PanelCollection>
                             <dx:PanelContent>

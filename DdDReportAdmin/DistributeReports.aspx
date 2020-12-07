@@ -9,7 +9,7 @@
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cpMain" runat="Server">
-	<dx:ASPxRoundPanel ID="rpDistributeReports" runat="server" ShowCollapseButton="true" Width="200px">
+	<dx:ASPxRoundPanel ID="rpDistributeReports" runat="server" ShowCollapseButton="true" Width="200px" Theme="Office2010Blue">
 		<HeaderTemplate>
 			Distribute reports:
 		</HeaderTemplate>

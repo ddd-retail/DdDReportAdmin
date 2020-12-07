@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="main" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cpMain" runat="Server">
-    <dx:ASPxRoundPanel ID="rpResetReports" runat="server" ShowCollapseButton="true" Width="200px">
+    <dx:ASPxRoundPanel ID="rpResetReports" runat="server" ShowCollapseButton="true" Width="200px" Theme="Office2010Blue">
         <HeaderTemplate>
             Reset reports:
         </HeaderTemplate>

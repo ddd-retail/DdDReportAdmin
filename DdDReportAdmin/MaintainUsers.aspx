@@ -92,7 +92,7 @@
 			});
 		}
 	</script>
-	<dx:ASPxRoundPanel ID="rpMaintainUsers" runat="server" ShowCollapseButton="true" Width="200px">
+	<dx:ASPxRoundPanel ID="rpMaintainUsers" runat="server" ShowCollapseButton="true" Width="200px" Theme="Office2010Blue">
 		<HeaderTemplate>
 			Maintain users:
 		</HeaderTemplate>

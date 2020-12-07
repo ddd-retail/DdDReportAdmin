@@ -18,7 +18,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cpMain" runat="Server">
-    <dx:ASPxRoundPanel ID="rpUserInformation" runat="server" ShowCollapseButton="true" Width="200px">
+    <dx:ASPxRoundPanel ID="rpUserInformation" runat="server" ShowCollapseButton="true" Width="200px" Theme="Office2010Blue">
         <HeaderTemplate>
             Choose user:
         </HeaderTemplate>
