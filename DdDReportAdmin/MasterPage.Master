@@ -39,7 +39,7 @@
                         <HeaderTemplate>&nbsp;</HeaderTemplate>
                         <PanelCollection>
                             <dx:PanelContent>
-                                <dx:ASPxNavBar ID="ASPxNavBar1" runat="server">
+                                <dx:ASPxNavBar ID="ASPxNavBar1" runat="server" Theme="Office2010Blue">
                                     <Groups>
                                         <dx:NavBarGroup Name="DdDReport_user_administration"
                                             Text="User information">
